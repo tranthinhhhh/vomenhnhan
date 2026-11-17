@@ -137,7 +137,7 @@ footer img{width:56px;height:56px;border-radius:50%;margin:0 auto 12px}
     <h1>VÔ MỆNH NHÂN</h1>
     <p class="cau">Trời khắc sẵn số mệnh của mỗi người lên bia đá.<br>Cậu sinh ra với một tấm bia trống.</p>
     <div class="nut">
-      <a class="chinh" href="#phim">▶ Xem Opening</a>
+      <a class="chinh" href="#phim" onclick="setTimeout(()=>{const v=document.querySelector('#vid-op video'); if(v) v.play().catch(()=>{});},700)">▶ Xem Opening</a>
       <a href="#ba-mang">Đọc truyện chữ</a>
       <a href="#ba-mang">Xem truyện tranh</a>
     </div>
@@ -264,7 +264,8 @@ footer img{width:56px;height:56px;border-radius:50%;margin:0 auto 12px}
 <script>
 /* ====== ANH SUA O DAY: dan link khi co ====== */
 const CAI_DAT = {
-  youtube_op: "",          // ma video YouTube cua Opening, vi du "dQw4w9WgXcQ" (phan sau watch?v=)
+  youtube_op: "",          // ma video YouTube cua Opening, vi du "dQw4w9WgXcQ" (phan sau watch?v=); co ma thi uu tien YouTube
+  op_file: "video/opening.mp4", // file Opening dat san tren web (dung khi chua co ma YouTube)
   youtube_tap1: "",        // ma video tap 1
   truyen_chu: "",          // link doc truyen chu chuong 1
   truyen_tranh: "",        // link truyen tranh
@@ -291,7 +292,9 @@ if(!CAI_DAT.youtube_tap1) document.getElementById("tt-hoat-hinh").textContent="T
 function video(id, ma, anh, chu){ const el=document.getElementById(id);
   if(ma){ el.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+ma+'?rel=0" title="'+chu+'" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>'; }
   else { el.innerHTML='<div class="cho" style="background-image:url('+anh+')"><span>'+chu+' · sắp ra mắt</span></div>'; } }
-video("vid-op", CAI_DAT.youtube_op, "img/logo.jpg", "Opening");
+if (!CAI_DAT.youtube_op && CAI_DAT.op_file) {
+  document.getElementById("vid-op").innerHTML = '<video src="'+CAI_DAT.op_file+'" poster="img/logo.jpg" controls playsinline preload="metadata" style="width:100%;height:100%;display:block;background:#000"></video>';
+} else { video("vid-op", CAI_DAT.youtube_op, "img/logo.jpg", "Opening"); }
 video("vid-tap1", CAI_DAT.youtube_tap1, "img/lo_gach.jpg", "Tập 1");
 document.getElementById("moc").innerHTML = CAI_DAT.tien_do.map(([t,a,b])=>'<li class="'+t+'"><b>'+a+'</b><span>'+b+'</span></li>').join("");
 document.getElementById("nam").textContent = new Date().getFullYear();
